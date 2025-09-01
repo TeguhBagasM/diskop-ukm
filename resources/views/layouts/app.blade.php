@@ -158,7 +158,7 @@
                                 <ul class="dropdown-menu dropdown-menu-custom">
                                     <li><a class="dropdown-item dropdown-item-custom" href="{{ route('admin.dashboard') }}"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
                                     <li><a class="dropdown-item dropdown-item-custom" href="{{ route('admin.agenda.index') }}"><i class="fas fa-calendar-alt me-2"></i>Agenda Kegiatan</a></li>
-                                    <li><a class="dropdown-item dropdown-item-custom" href="{{ route('users.index') }}"><i class="fas fa-users me-2"></i>Data Sekolah</a></li>
+                                    <li><a class="dropdown-item dropdown-item-custom" href="{{ route('users.index') }}"><i class="fas fa-users me-2"></i>Data Users</a></li>
                                 </ul>
                             </li>
 
