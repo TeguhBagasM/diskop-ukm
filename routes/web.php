@@ -33,6 +33,12 @@ Route::middleware(['isAdmin'])->group(function () {
         Route::get('/export/excel', [AgendaKegiatanController::class, 'export'])->name('export.excel');
         Route::get('/api/json', [AgendaKegiatanController::class, 'getAgendaJson'])->name('api.json');
     });
+    // Agenda Kegiatan Routes (Admin Only)
+    Route::prefix('admin/calendar')->name('admin.calendar.')->group(function () {
+        Route::get('/calendar', [App\Http\Controllers\Admin\AgendaKegiatanController::class, 'calendar'])->name('calendar');
+        Route::get('/calendar/agenda/{date}', [App\Http\Controllers\Admin\AgendaKegiatanController::class, 'getAgendaForDate'])->name('calendar.agenda');
+
+    });
 
     // tambahkan route admin lainnya di sini
 });
