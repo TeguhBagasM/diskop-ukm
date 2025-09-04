@@ -41,7 +41,7 @@ class AgendaKegiatanController extends Controller
         }
 
         // Order by tanggal_kegiatan and waktu
-        $query->orderBy('tanggal_kegiatan_kegiatan', 'desc')
+        $query->orderBy('tanggal_kegiatan', 'desc')
               ->orderBy('waktu', 'asc');
 
         $perPage = $request->get('per_page', 10);
@@ -70,7 +70,7 @@ class AgendaKegiatanController extends Controller
             'tempat' => 'required|string|max:255',
             'waktu' => 'required',
             'pegawai_yang_ditugaskan' => 'required|string|max:255',
-            'tanggal_kegiatan_kegiatan' => 'required|date',
+            'tanggal_kegiatan' => 'required|date',
             'tindak_lanjut' => 'required|in:PENDING,SELESAI,BATAL',
             'keterangan' => 'nullable|string',
         ]);
@@ -109,7 +109,7 @@ class AgendaKegiatanController extends Controller
             'tempat' => 'required|string|max:255',
             'waktu' => 'required',
             'pegawai_yang_ditugaskan' => 'required|string|max:255',
-            'tanggal_kegiatan_kegiatan' => 'required|date',
+            'tanggal_kegiatan' => 'required|date',
             'tindak_lanjut' => 'required|in:PENDING,SELESAI,BATAL',
             'keterangan' => 'nullable|string',
         ]);
@@ -163,7 +163,7 @@ class AgendaKegiatanController extends Controller
         $query = AgendaKegiatan::query();
 
         if ($request->has('date')) {
-            $query->whereDate('tanggal_kegiatan_kegiatan', $request->date);
+            $query->whereDate('tanggal_kegiatan', $request->date);
         }
 
         $agendas = $query->orderBy('waktu', 'asc')->get();
