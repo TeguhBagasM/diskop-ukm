@@ -134,17 +134,6 @@ class AgendaKegiatanController extends Controller
     /**
      * Update status tindak lanjut
      */
-    public function updateStatus(Request $request, AgendaKegiatan $agenda): RedirectResponse
-    {
-        $validated = $request->validate([
-            'tindak_lanjut' => 'required|in:PENDING,SELESAI,BATAL',
-        ]);
-
-        $agenda->update(['tindak_lanjut' => $validated['tindak_lanjut']]);
-
-        return redirect()->back()
-                        ->with('success', 'Status tindak lanjut berhasil diperbarui.');
-    }
 
     /**
      * Export agenda kegiatan to Excel/PDF
