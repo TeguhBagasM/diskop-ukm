@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->enum('jenis_kegiatan', ['INTERNAL', 'EKSTERNAL']);
             $table->string('nama_kegiatan');
-            $table->enum('sumber', ['PPK', 'KPK', 'BAPPELITBANG']);
+            $table->string('sumber');
             $table->string('tempat');
             $table->time('waktu');
             $table->string('pegawai_yang_ditugaskan');
