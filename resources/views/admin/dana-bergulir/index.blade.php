@@ -7,7 +7,7 @@
             <!-- Header Dashboard Style -->
             <div class="d-flex justify-content-center mb-4">
                 <div class="dashboard-header">
-                    <h3 class="mb-0">Ini halaman realisasi anggaran</h3>
+                    <h3 class="mb-0">Ini halaman dana bergulir</h3>
                 </div>
             </div>
 
@@ -16,7 +16,7 @@
                     <!-- Header dengan style seperti dashboard -->
                     <div class="d-flex justify-content-between align-items-center p-3" style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">
                         <div class="d-flex align-items-center">
-                            <h5 class="mb-0" style="font-weight: 600; color: #5a6c7d;">INI HALAMAN realisasi anggaran</h5>
+                            <h5 class="mb-0" style="font-weight: 600; color: #5a6c7d;">INI HALAMAN dana bergulir</h5>
                         </div>
                     </div>
 
