@@ -66,7 +66,7 @@ class AgendaKegiatanController extends Controller
         $validated = $request->validate([
             'jenis_kegiatan' => 'required|in:INTERNAL,EKSTERNAL',
             'nama_kegiatan' => 'required|string|max:255',
-            'sumber' => 'required|in:PPK,KPK,BAPPELITBANG',
+            'sumber' => 'required',
             'tempat' => 'required|string|max:255',
             'waktu' => 'required',
             'pegawai_yang_ditugaskan' => 'required|string|max:255',
@@ -105,7 +105,7 @@ class AgendaKegiatanController extends Controller
         $validated = $request->validate([
             'jenis_kegiatan' => 'required|in:INTERNAL,EKSTERNAL',
             'nama_kegiatan' => 'required|string|max:255',
-            'sumber' => 'required|in:PPK,KPK,BAPPELITBANG',
+            'sumber' => 'required',
             'tempat' => 'required|string|max:255',
             'waktu' => 'required',
             'pegawai_yang_ditugaskan' => 'required|string|max:255',

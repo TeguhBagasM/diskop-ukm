@@ -76,15 +76,13 @@
                                         <i class="fas fa-building text-info"></i> Sumber
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <select class="form-select @error('sumber') is-invalid @enderror"
-                                            id="sumber"
-                                            name="sumber"
-                                            required>
-                                        <option value="">Pilih Sumber</option>
-                                        <option value="PPK" {{ old('sumber') == 'PPK' ? 'selected' : '' }}>PPK</option>
-                                        <option value="KPK" {{ old('sumber') == 'KPK' ? 'selected' : '' }}>KPK</option>
-                                        <option value="BAPPELITBANG" {{ old('sumber') == 'BAPPELITBANG' ? 'selected' : '' }}>BAPPELITBANG</option>
-                                    </select>
+                                    <input type="text"
+                                           class="form-control @error('sumber') is-invalid @enderror"
+                                           id="sumber"
+                                           name="sumber"
+                                           value="{{ old('sumber') }}"
+                                           placeholder="Masukkan sumber kegiatan"
+                                           required>
                                     @error('sumber')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
