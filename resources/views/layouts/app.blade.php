@@ -158,10 +158,10 @@
                                 <ul class="dropdown-menu dropdown-menu-custom">
                                     <li><a class="dropdown-item dropdown-item-custom" href="{{ route('admin.dashboard') }}"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
                                     <li><a class="dropdown-item dropdown-item-custom" href="{{ route('admin.agenda.index') }}"><i class="fas fa-calendar-alt me-2"></i>Agenda Kegiatan</a></li>
-                                    
-                                    <li><a class="dropdown-item dropdown-item-custom" href="{{ route('admin.iku.index') }}"><i class="fas fa-calendar-alt me-2"></i>Iku</a></li>
-                                    <li><a class="dropdown-item dropdown-item-custom" href="{{ route('admin.anggaran.index') }}"><i class="fas fa-calendar-alt me-2"></i>Realisasi Anggaran</a></li>
-                                    <li><a class="dropdown-item dropdown-item-custom" href="{{ route('admin.danabergulir.index') }}"><i class="fas fa-calendar-alt me-2"></i>Dana Bergulir</a></li>
+                                    <li><a class="dropdown-item dropdown-item-custom" href="{{ route('admin.iku.index') }}"><i class="fas fa-bullseye me-2"></i>Iku</a></li>
+                                    <li><a class="dropdown-item dropdown-item-custom" href="{{ route('admin.anggaran.index') }}"><i class="fas fa-money-bill-wave me-2"></i>Realisasi Anggaran</a></li>
+                                    <li><a class="dropdown-item dropdown-item-custom" href="{{ route('admin.danabergulir.index') }}"><i class="fas fa-hand-holding-usd me-2"></i>Dana Bergulir</a></li>
+                                    <li><a class="dropdown-item dropdown-item-custom" href="{{ route('admin.calendar.calendar') }}"><i class="fas fa-hand-holding-usd me-2"></i>Kalender</a></li>
                                     {{-- <li><a class="dropdown-item dropdown-item-custom" href="{{ route('users.index') }}"><i class="fas fa-users me-2"></i>Data Users</a></li> --}}
                                 </ul>
                             </li>
@@ -172,12 +172,13 @@
                                     <i class="fas fa-database me-1"></i> DATA
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-custom">
-                                <li><a class="dropdown-item dropdown-item-custom" href="{{ route('admin.koperasi.index') }}"><i class="fas fa-calendar-alt me-2"></i>Data Koperasi</a></li>
-                                <li><a class="dropdown-item dropdown-item-custom" href="{{ route('admin.umkm.index') }}"><i class="fas fa-calendar-alt me-2"></i>Data UMKM</a></li>
-                                <li><a class="dropdown-item dropdown-item-custom" href="{{ route('admin.dokdiskop.index') }}"><i class="fas fa-calendar-alt me-2"></i>Dokumen Diskop Ukm</a></li>
-                                <li><a class="dropdown-item dropdown-item-custom" href="{{ route('admin.pegawai.index') }}"><i class="fas fa-calendar-alt me-2"></i>Data Pegawai</a></li>
+                                    <li><a class="dropdown-item dropdown-item-custom" href="{{ route('admin.koperasi.index') }}"><i class="fas fa-building me-2"></i>Data Koperasi</a></li>
+                                    <li><a class="dropdown-item dropdown-item-custom" href="{{ route('admin.umkm.index') }}"><i class="fas fa-store me-2"></i>Data UMKM</a></li>
+                                    <li><a class="dropdown-item dropdown-item-custom" href="{{ route('admin.dokdiskop.index') }}"><i class="fas fa-file-alt me-2"></i>Dokumen Diskop Ukm</a></li>
+                                    <li><a class="dropdown-item dropdown-item-custom" href="{{ route('admin.pegawai.index') }}"><i class="fas fa-user-tie me-2"></i>Data Pegawai</a></li>
                                 </ul>
                             </li>
+
 
                             <!-- Tentang -->
                             <li class="nav-item nav-item-spacing">
