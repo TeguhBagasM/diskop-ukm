@@ -109,13 +109,13 @@
                                             </div>
                                         </td>
                                         <td class="text-center" style="vertical-align: middle;">
-                                            @if($agenda->tindak_lanjut == 'SELESAI')
+                                            @if($agenda->tindak_lanjut == 'DIHADIRI')
                                                 <span class="text-success">
                                                     <i class="fas fa-check-circle"></i>
-                                                    <span class="badge bg-success ms-1">SELESAI</span>
+                                                    <span class="badge bg-success ms-1">DIHADIRI</span>
                                                 </span>
-                                            @elseif($agenda->tindak_lanjut == 'PENDING')
-                                                <span class="badge bg-warning">PENDING</span>
+                                            @elseif($agenda->tindak_lanjut == 'DISPOSISI')
+                                                <span class="badge bg-warning">DISPOSISI</span>
                                             @else
                                                 <span class="text-muted">-</span>
                                             @endif

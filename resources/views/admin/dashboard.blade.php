@@ -140,8 +140,8 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <h6 class="card-title text-warning mb-1">Agenda Pending</h6>
-                                    <h3 class="mb-0 text-warning">{{ $pendingAgenda ?? 0 }}</h3>
+                                    <h6 class="card-title text-warning mb-1">Agenda Disposisi</h6>
+                                    <h3 class="mb-0 text-warning">{{ $disposisiAgenda ?? 0 }}</h3>
                                 </div>
                                 <div class="align-self-center">
                                     <i class="fas fa-clock fa-2x text-warning opacity-75"></i>
@@ -156,8 +156,8 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <h6 class="card-title text-danger mb-1">Agenda Selesai</h6>
-                                    <h3 class="mb-0 text-danger">{{ $completedAgenda ?? 0 }}</h3>
+                                    <h6 class="card-title text-danger mb-1">Agenda Dihadiri</h6>
+                                    <h3 class="mb-0 text-danger">{{ $dihadiriAgenda ?? 0 }}</h3>
                                 </div>
                                 <div class="align-self-center">
                                     <i class="fas fa-check-circle fa-2x text-danger opacity-75"></i>

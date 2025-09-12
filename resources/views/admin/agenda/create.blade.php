@@ -175,9 +175,8 @@
                                             name="tindak_lanjut"
                                             required>
                                         <option value="">Pilih Status</option>
-                                        <option value="PENDING" {{ old('tindak_lanjut') == 'PENDING' ? 'selected' : '' }}>PENDING</option>
-                                        <option value="SELESAI" {{ old('tindak_lanjut') == 'SELESAI' ? 'selected' : '' }}>SELESAI</option>
-                                        <option value="BATAL" {{ old('tindak_lanjut') == 'BATAL' ? 'selected' : '' }}>BATAL</option>
+                                        <option value="DISPOSISI" {{ old('tindak_lanjut') == 'DISPOSISI' ? 'selected' : '' }}>DISPOSISI</option>
+                                        <option value="DIHADIRI" {{ old('tindak_lanjut') == 'DIHADIRI' ? 'selected' : '' }}>DIHADIRI</option>
                                     </select>
                                     @error('tindak_lanjut')
                                         <div class="invalid-feedback">{{ $message }}</div>

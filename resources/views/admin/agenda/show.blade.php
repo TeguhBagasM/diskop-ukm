@@ -22,17 +22,13 @@
                             <span class="badge bg-info me-2" style="border-radius: 15px; padding: 8px 16px;">
                                 <i class="fas fa-building me-1"></i>{{ $agenda->sumber }}
                             </span>
-                            @if($agenda->tindak_lanjut == 'SELESAI')
+                            @if($agenda->tindak_lanjut == 'DIHADIRI')
                                 <span class="badge bg-success" style="border-radius: 15px; padding: 8px 16px;">
-                                    <i class="fas fa-check-circle me-1"></i>SELESAI
+                                    <i class="fas fa-check-circle me-1"></i>DIHADIRI
                                 </span>
-                            @elseif($agenda->tindak_lanjut == 'PENDING')
+                            @elseif($agenda->tindak_lanjut == 'DISPOSISI')
                                 <span class="badge bg-warning" style="border-radius: 15px; padding: 8px 16px;">
-                                    <i class="fas fa-clock me-1"></i>PENDING
-                                </span>
-                            @elseif($agenda->tindak_lanjut == 'BATAL')
-                                <span class="badge bg-danger" style="border-radius: 15px; padding: 8px 16px;">
-                                    <i class="fas fa-times-circle me-1"></i>BATAL
+                                    <i class="fas fa-clock me-1"></i>DISPOSISI
                                 </span>
                             @endif
                         </div>
@@ -176,24 +172,18 @@
                             </h6>
                         </div>
                         <div class="card-body text-center">
-                            @if($agenda->tindak_lanjut == 'SELESAI')
+                            @if($agenda->tindak_lanjut == 'DIHADIRI')
                                 <div class="status-icon text-success mb-2">
                                     <i class="fas fa-check-circle fa-3x"></i>
                                 </div>
-                                <h5 class="text-success">SELESAI</h5>
+                                <h5 class="text-success">DIHADIRI</h5>
                                 <p class="text-muted small">Kegiatan telah dilaksanakan dengan baik</p>
-                            @elseif($agenda->tindak_lanjut == 'PENDING')
+                            @elseif($agenda->tindak_lanjut == 'DISPOSISI')
                                 <div class="status-icon text-warning mb-2">
                                     <i class="fas fa-clock fa-3x"></i>
                                 </div>
-                                <h5 class="text-warning">PENDING</h5>
+                                <h5 class="text-warning">DISPOSISI</h5>
                                 <p class="text-muted small">Kegiatan sedang menunggu tindak lanjut</p>
-                            @elseif($agenda->tindak_lanjut == 'BATAL')
-                                <div class="status-icon text-danger mb-2">
-                                    <i class="fas fa-times-circle fa-3x"></i>
-                                </div>
-                                <h5 class="text-danger">BATAL</h5>
-                                <p class="text-muted small">Kegiatan dibatalkan</p>
                             @else
                                 <div class="status-icon text-secondary mb-2">
                                     <i class="fas fa-question-circle fa-3x"></i>
