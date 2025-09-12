@@ -32,9 +32,8 @@ class AgendaKegiatan extends Model
     public function getStatusBadgeAttribute()
     {
         return match($this->tindak_lanjut) {
-            'SELESAI' => '<span class="badge bg-success">Selesai</span>',
-            'PENDING' => '<span class="badge bg-warning">Pending</span>',
-            'BATAL' => '<span class="badge bg-danger">Batal</span>',
+            'DIHADIRI' => '<span class="badge bg-success">Dihadiri</span>',
+            'DISPOSISI' => '<span class="badge bg-warning">Disposisi</span>',
             default => '<span class="badge bg-secondary">-</span>'
         };
     }

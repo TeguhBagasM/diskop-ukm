@@ -22,7 +22,7 @@ class AgendaKegiatanSeeder extends Seeder
                 'tempat' => 'HOTEL LINGGA',
                 'waktu' => '08:00',
                 'pegawai_yang_ditugaskan' => 'HENTJE WANGI KIKI',
-                'tindak_lanjut' => 'PENDING',
+                'tindak_lanjut' => 'DISPOSISI',
                 'tanggal_kegiatan' => Carbon::today(),
             ],
             [
@@ -32,7 +32,7 @@ class AgendaKegiatanSeeder extends Seeder
                 'tempat' => 'HOTEL SUNSHINE',
                 'waktu' => '08:00',
                 'pegawai_yang_ditugaskan' => 'IYUS RUU FIQRI',
-                'tindak_lanjut' => 'SELESAI',
+                'tindak_lanjut' => 'DIHADIRI',
                 'tanggal_kegiatan' => Carbon::today(),
             ],
             [
@@ -42,7 +42,7 @@ class AgendaKegiatanSeeder extends Seeder
                 'tempat' => 'KOPERASI BARAYA',
                 'waktu' => '08:00',
                 'pegawai_yang_ditugaskan' => 'FAJAR WANGI',
-                'tindak_lanjut' => 'PENDING',
+                'tindak_lanjut' => 'DISPOSISI',
                 'tanggal_kegiatan' => Carbon::today(),
             ],
             [
@@ -52,7 +52,7 @@ class AgendaKegiatanSeeder extends Seeder
                 'tempat' => 'THE GAIA',
                 'waktu' => '09:00',
                 'pegawai_yang_ditugaskan' => 'FIQRI FIQRI',
-                'tindak_lanjut' => 'SELESAI',
+                'tindak_lanjut' => 'DIHADIRI',
                 'tanggal_kegiatan' => Carbon::today(),
             ],
         ];

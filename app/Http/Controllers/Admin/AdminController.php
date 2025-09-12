@@ -26,11 +26,11 @@ class AdminController extends Controller
                                      ->whereYear('tanggal_kegiatan', Carbon::now()->year)
                                      ->count();
 
-        $pendingAgenda = AgendaKegiatan::where('tindak_lanjut', 'PENDING')
+        $disposisiAgenda = AgendaKegiatan::where('tindak_lanjut', 'DISPOSISI')
                                      ->whereDate('tanggal_kegiatan', '>=', Carbon::today())
                                      ->count();
 
-        $completedAgenda = AgendaKegiatan::where('tindak_lanjut', 'SELESAI')
+        $dihadiriAgenda = AgendaKegiatan::where('tindak_lanjut', 'DIHADIRI')
                                        ->whereMonth('tanggal_kegiatan', Carbon::now()->month)
                                        ->whereYear('tanggal_kegiatan', Carbon::now()->year)
                                        ->count();
@@ -38,8 +38,8 @@ class AdminController extends Controller
         return view('admin.dashboard', compact(
             'todayAgenda',
             'monthlyAgenda',
-            'pendingAgenda',
-            'completedAgenda'
+            'disposisiAgenda',
+            'dihadiriAgenda'
         ));
     }
 }
