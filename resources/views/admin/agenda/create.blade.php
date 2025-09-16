@@ -161,27 +161,6 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-
-                                <!-- Tindak Lanjut -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="tindak_lanjut" class="form-label fw-bold">
-                                        <i class="fas fa-tasks text-secondary"></i> Tindak Lanjut
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <select class="form-select @error('tindak_lanjut') is-invalid @enderror"
-                                            id="tindak_lanjut"
-                                            name="tindak_lanjut"
-                                            required>
-                                        <option value="">Pilih Status</option>
-                                        <option value="DISPOSISI" {{ old('tindak_lanjut') == 'DISPOSISI' ? 'selected' : '' }}>DISPOSISI</option>
-                                        <option value="DIHADIRI" {{ old('tindak_lanjut') == 'DIHADIRI' ? 'selected' : '' }}>DIHADIRI</option>
-                                    </select>
-                                    @error('tindak_lanjut')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-
                             <!-- Pegawai yang Ditugaskan -->
                             <div class="mb-3">
                                 <label for="pegawai_yang_ditugaskan" class="form-label fw-bold">

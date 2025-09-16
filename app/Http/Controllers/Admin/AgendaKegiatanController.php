@@ -71,7 +71,6 @@ class AgendaKegiatanController extends Controller
             'waktu' => 'required',
             'pegawai_yang_ditugaskan' => 'required|string|max:255',
             'tanggal_kegiatan' => 'required|date',
-            'tindak_lanjut' => 'required|in:DISPOSISI,DIHADIRI',
             'keterangan' => 'nullable|string',
         ]);
 
