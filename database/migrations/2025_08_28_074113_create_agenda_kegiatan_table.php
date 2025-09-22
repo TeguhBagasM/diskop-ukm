@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('tempat');
             $table->time('waktu');
             $table->string('pegawai_yang_ditugaskan');
-            $table->enum('tindak_lanjut', ['DISPOSISI', 'DIHADIRI'])->nullable();
+            $table->string('tindak_lanjut')->nullable();
             $table->text('keterangan')->nullable();
             $table->date('tanggal_kegiatan');
             $table->timestamps();

@@ -197,7 +197,7 @@
                                             name="tindak_lanjut"
                                             required>
                                         <option value="">Pilih Status</option>
-                                        <option value="DIHADIRI" {{ (old('tindak_lanjut', $agenda->tindak_lanjut) == 'DIHADIRI') ? 'selected' : '' }}>DIHADIRI</option>
+                                        <option value="DIHADIRI KEPALA DINAS" {{ (old('tindak_lanjut', $agenda->tindak_lanjut) == 'DIHADIRI KEPALA DINAS') ? 'selected' : '' }}>DIHADIRI KEPALA DINAS</option>
                                         <option value="DISPOSISI" {{ (old('tindak_lanjut', $agenda->tindak_lanjut) == 'DISPOSISI') ? 'selected' : '' }}>DISPOSISI</option>
                                     </select>
                                     @error('tindak_lanjut')

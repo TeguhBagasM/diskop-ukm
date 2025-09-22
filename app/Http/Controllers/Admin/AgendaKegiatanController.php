@@ -71,6 +71,7 @@ class AgendaKegiatanController extends Controller
             'waktu' => 'required',
             'pegawai_yang_ditugaskan' => 'required|string|max:255',
             'tanggal_kegiatan' => 'required|date',
+            'tindak_lanjut' => 'required|in:DISPOSISI,DIHADIRI KEPALA DINAS',
             'keterangan' => 'nullable|string',
         ]);
 
@@ -109,7 +110,7 @@ class AgendaKegiatanController extends Controller
             'waktu' => 'required',
             'pegawai_yang_ditugaskan' => 'required|string|max:255',
             'tanggal_kegiatan' => 'required|date',
-            'tindak_lanjut' => 'required|in:DISPOSISI,DIHADIRI',
+            'tindak_lanjut' => 'required|in:DISPOSISI,DIHADIRI KEPALA DINAS',
             'keterangan' => 'nullable|string',
         ]);
 
@@ -136,7 +137,7 @@ class AgendaKegiatanController extends Controller
     public function updateStatus(Request $request, AgendaKegiatan $agenda): RedirectResponse
     {
         $validated = $request->validate([
-            'tindak_lanjut' => 'required|in:DISPOSISI,DIHADIRI',
+            'tindak_lanjut' => 'required|in:DISPOSISI,DIHADIRI KEPALA DINAS',
         ]);
 
         $agenda->update(['tindak_lanjut' => $validated['tindak_lanjut']]);

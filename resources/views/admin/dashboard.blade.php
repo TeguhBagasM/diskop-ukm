@@ -35,7 +35,7 @@
                                     <th class="text-center" style="width: 50px; font-weight: 600; color: #1976d2;">No</th>
                                     <th class="text-center" style="width: 120px; font-weight: 600; color: #1976d2;">Jenis Kegiatan</th>
                                     <th style="font-weight: 600; color: #1976d2;">Nama Kegiatan</th>
-                                    <th class="text-center" style="width: 100px; font-weight: 600; color: #1976d2;">Sumber</th>
+                                    <th class="text-center" style="width: 100px; font-weight: 600; color: #1976d2;">Tanggal Kegiatan</th>
                                     <th style="width: 150px; font-weight: 600; color: #1976d2;">Tempat</th>
                                     <th class="text-center" style="width: 80px; font-weight: 600; color: #1976d2;">Waktu</th>
                                     <th style="width: 180px; font-weight: 600; color: #1976d2;">Pegawai yang Ditugaskan</th>
@@ -59,8 +59,8 @@
                                         {{ $agenda->nama_kegiatan }}
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <span class="badge bg-info text-white" style="border-radius: 12px;">
-                                            {{ $agenda->sumber }}
+                                        <span class="badge text-black" style="border-radius: 12px;">
+                                            {{ $agenda->tanggal_kegiatan->format('d M Y') }}
                                         </span>
                                     </td>
                                     <td style="vertical-align: middle;">
