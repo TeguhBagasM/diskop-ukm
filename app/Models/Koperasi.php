@@ -79,22 +79,22 @@ class Koperasi extends Model
     // Accessor untuk format rupiah
     public function getFormattedModalSendiriAttribute()
     {
-        return 'Rp ' . number_format($this->modal_sendiri, 0, ',', '.');
+        return 'Rp ' . number_format((float)($this->modal_sendiri ?? 0), 0, ',', '.');
     }
 
     public function getFormattedModalLuarAttribute()
     {
-        return 'Rp ' . number_format($this->modal_luar, 0, ',', '.');
+        return 'Rp ' . number_format((float)($this->modal_luar ?? 0), 0, ',', '.');
     }
 
     public function getFormattedVolumeUsahaAttribute()
     {
-        return 'Rp ' . number_format($this->volume_usaha, 0, ',', '.');
+        return 'Rp ' . number_format((float)($this->volume_usaha ?? 0), 0, ',', '.');
     }
 
     public function getFormattedShuAttribute()
     {
-        return 'Rp ' . number_format($this->shu, 0, ',', '.');
+        return 'Rp ' . number_format((float)($this->shu ?? 0), 0, ',', '.');
     }
 
     // Method untuk pencarian

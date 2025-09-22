@@ -61,6 +61,14 @@ Route::middleware(['isAdmin'])->prefix('admin')->name('admin.')->group(function 
     // Data Koperasi
     Route::resource('koperasi', KoperasiController::class);
 
+    // Koperasi Upload routes
+    Route::prefix('koperasi')->name('koperasi.')->group(function () {
+        Route::get('/upload', [KoperasiController::class, 'uploadIndex'])->name('upload.index');
+        Route::post('/upload', [KoperasiController::class, 'upload'])->name('upload.store');
+        Route::delete('/upload/{id}', [KoperasiController::class, 'deleteUpload'])->name('upload.destroy');
+        Route::get('/download-template', [KoperasiController::class, 'downloadTemplate'])->name('download-template');
+    });
+
     // Data UMKM
     Route::resource('umkm', UmkmController::class);
 
