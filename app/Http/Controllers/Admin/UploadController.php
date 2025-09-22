@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\KoperasiTemplateExport;
 use App\Http\Controllers\Controller;
 use App\Imports\KoperasiImport;
 use App\Models\FileUpload;
@@ -95,60 +96,8 @@ class UploadController extends Controller
     }
 
     public function downloadTemplate()
-    {
-        $headers = [
-            'nama_koperasi',
-            'alamat',
-            'kelurahan',
-            'kecamatan',
-            'status',
-            'jenis_koperasi',
-            'no_badan_hukum',
-            'tanggal_berdiri',
-            'ketua',
-            'sekretaris',
-            'bendahara',
-            'no_telepon',
-            'email',
-            'jumlah_anggota',
-            'modal_sendiri',
-            'modal_luar',
-            'volume_usaha',
-            'shu',
-            'keterangan'
-        ];
+{
+    return Excel::download(new KoperasiTemplateExport(), 'template_koperasi.xlsx');
+}
 
-        return response()->streamDownload(function() use ($headers) {
-            $file = fopen('php://output', 'w');
-            fputcsv($file, $headers);
-
-            // Add sample data
-            $sampleData = [
-                'Koperasi Sejahtera Mandiri',
-                'Jl. Raya Bandung No. 123',
-                'Cimahi',
-                'Cimahi',
-                'AKTIF',
-                'Konsumen',
-                '518/BH/KWK.11/III/2023',
-                '2023-03-15',
-                'Budi Santoso',
-                'Ani Kartini',
-                'Candra Wijaya',
-                '022-1234567',
-                'koperasi@example.com',
-                50,
-                150000000,
-                75000000,
-                400000000,
-                30000000,
-                'Koperasi yang bergerak di bidang konsumen'
-            ];
-            fputcsv($file, $sampleData);
-
-            fclose($file);
-        }, 'template_koperasi.csv', [
-            'Content-Type' => 'text/csv',
-        ]);
-    }
 }
