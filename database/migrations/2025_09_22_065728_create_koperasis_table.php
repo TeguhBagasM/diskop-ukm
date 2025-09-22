@@ -18,12 +18,7 @@ return new class extends Migration
             $table->string('kelurahan');
             $table->string('kecamatan');
             $table->enum('status', ['AKTIF', 'TIDAK AKTIF'])->default('AKTIF');
-            $table->enum('jenis_koperasi', [
-                'Produksi',
-                'Konsumen',
-                'Simpan Pinjam',
-                'Serba Usaha'
-            ]);
+            $table->string('jenis_koperasi');
             $table->string('no_badan_hukum')->nullable();
             $table->date('tanggal_berdiri')->nullable();
             $table->string('ketua')->nullable();

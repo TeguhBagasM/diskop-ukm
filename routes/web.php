@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\UploadController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AgendaKegiatanController;
 use App\Http\Controllers\Admin\IkuController;
@@ -25,7 +26,19 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::middleware(['isAdmin'])->prefix('admin')->name('admin.')->group(function () {
     // Dashboard
     Route::get('/', [AdminController::class, 'index'])->name('dashboard');
+    // Data Koperasi
+    Route::resource('koperasi', KoperasiController::class);
 
+    // Koperasi Upload routes
+    Route::prefix('koperasi/koperasi')->name('koperasi.')->group(function () {
+        Route::get('/upload', [UploadController::class, 'uploadIndex'])->name('upload.index');
+        Route::post('/upload', [UploadController::class, 'upload'])->name('upload.store');
+        Route::get('/download-template', [UploadController::class, 'downloadTemplate'])->name('download-template');
+    });
+    Route::prefix('koperasi')->name('koperasi.')->group(function () {
+        Route::delete('/upload/{id}', [UploadController::class, 'deleteUpload'])->name('upload.destroy');
+
+    });
     // Users
     Route::resource('users', UserController::class);
 
@@ -57,17 +70,6 @@ Route::middleware(['isAdmin'])->prefix('admin')->name('admin.')->group(function 
 
     // Dana Bergulir
     Route::resource('danabergulir', DanaBergulirController::class);
-
-    // Data Koperasi
-    Route::resource('koperasi', KoperasiController::class);
-
-    // Koperasi Upload routes
-    Route::prefix('koperasi')->name('koperasi.')->group(function () {
-        Route::get('/upload', [KoperasiController::class, 'uploadIndex'])->name('upload.index');
-        Route::post('/upload', [KoperasiController::class, 'upload'])->name('upload.store');
-        Route::delete('/upload/{id}', [KoperasiController::class, 'deleteUpload'])->name('upload.destroy');
-        Route::get('/download-template', [KoperasiController::class, 'downloadTemplate'])->name('download-template');
-    });
 
     // Data UMKM
     Route::resource('umkm', UmkmController::class);

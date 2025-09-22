@@ -22,9 +22,9 @@
                             <a href="{{ route('admin.koperasi.upload.index') }}" class="btn btn-success btn-sm">
                                 <i class="fas fa-upload"></i> Upload Excel
                             </a>
-                            <a href="{{ route('admin.koperasi.create') }}" class="btn btn-primary btn-sm">
+                            {{-- <a href="{{ route('admin.koperasi.create') }}" class="btn btn-primary btn-sm">
                                 <i class="fas fa-plus"></i> Tambah Koperasi
-                            </a>
+                            </a> --}}
                         </div>
                     </div>
 
@@ -145,11 +145,11 @@
                                                    title="Detail">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
-                                                <a href="{{ route('admin.koperasi.edit', $koperasi) }}"
+                                                {{-- <a href="{{ route('admin.koperasi.edit', $koperasi) }}"
                                                    class="btn btn-warning btn-sm"
                                                    title="Edit">
                                                     <i class="fas fa-edit"></i>
-                                                </a>
+                                                </a> --}}
                                                 <form action="{{ route('admin.koperasi.destroy', $koperasi) }}"
                                                       method="POST"
                                                       class="d-inline">
