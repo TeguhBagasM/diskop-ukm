@@ -20,7 +20,7 @@ class AdminController extends Controller
         $todayAgenda = AgendaKegiatan::with('pegawais')
                                 ->whereDate('tanggal_kegiatan', '>=', Carbon::today())
                                 ->orderBy('tanggal_kegiatan', 'desc')
-                                ->orderBy('waktu', 'asc')
+                                ->orderBy('waktu', 'desc')
                                 ->limit(10)
                                 ->get();
 
