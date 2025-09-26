@@ -102,9 +102,9 @@
                                         </td>
                                         <td style="vertical-align: middle;">
                                             <div class="d-flex align-items-center">
-                                                <div class="avatar-circle me-2" style="width: 32px; height: 32px; background-color: #5a6c7d; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px;">
+                                                {{-- <div class="avatar-circle me-2" style="width: 32px; height: 32px; background-color: #5a6c7d; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px;">
                                                     {{ substr($agenda->pegawai_yang_ditugaskan, 0, 2) }}
-                                                </div>
+                                                </div> --}}
                                                 <span style="font-weight: 500;">{{ $agenda->pegawai_yang_ditugaskan }}</span>
                                             </div>
                                         </td>

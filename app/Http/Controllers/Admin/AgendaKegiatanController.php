@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\AgendaKegiatan;
+use App\Models\Pegawai;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -16,17 +17,21 @@ class AgendaKegiatanController extends Controller
      */
     public function index(Request $request): View
     {
-        $query = AgendaKegiatan::query();
+        $query = AgendaKegiatan::with('pegawais'); // Eager load pegawais
 
         // Search functionality
         if ($request->has('search') && $request->search != '') {
             $searchTerm = $request->search;
             $query->where(function($q) use ($searchTerm) {
                 $q->where('nama_kegiatan', 'like', "%{$searchTerm}%")
-                  ->orWhere('pegawai_yang_ditugaskan', 'like', "%{$searchTerm}%")
-                  ->orWhere('tempat', 'like', "%{$searchTerm}%")
-                  ->orWhere('jenis_kegiatan', 'like', "%{$searchTerm}%")
-                  ->orWhere('sumber', 'like', "%{$searchTerm}%");
+                ->orWhere('tempat', 'like', "%{$searchTerm}%")
+                ->orWhere('jenis_kegiatan', 'like', "%{$searchTerm}%")
+                ->orWhere('sumber', 'like', "%{$searchTerm}%")
+                // Search in related pegawai names
+                ->orWhereHas('pegawais', function($pegawaiQuery) use ($searchTerm) {
+                    $pegawaiQuery->where('nama', 'like', "%{$searchTerm}%")
+                                ->orWhere('nip', 'like', "%{$searchTerm}%");
+                });
             });
         }
 
@@ -40,14 +45,26 @@ class AgendaKegiatanController extends Controller
             $query->where('sumber', $request->sumber);
         }
 
+        // Filter by pegawai (new filter)
+        if ($request->has('pegawai') && $request->pegawai != '') {
+            $query->whereHas('pegawais', function($pegawaiQuery) use ($request) {
+                $pegawaiQuery->where('id', $request->pegawai);
+            });
+        }
+
         // Order by tanggal_kegiatan and waktu
         $query->orderBy('tanggal_kegiatan', 'desc')
-              ->orderBy('waktu', 'asc');
+            ->orderBy('waktu', 'asc');
 
         $perPage = $request->get('per_page', 10);
         $agendaKegiatan = $query->paginate($perPage);
 
-        return view('admin.agenda.index', compact('agendaKegiatan'));
+        // Get all pegawai for filter dropdown
+        $pegawais = Pegawai::select('id', 'nama', 'nip')
+                        ->orderBy('nama')
+                        ->get();
+
+        return view('admin.agenda.index', compact('agendaKegiatan', 'pegawais'));
     }
 
     /**
@@ -55,7 +72,12 @@ class AgendaKegiatanController extends Controller
      */
     public function create(): View
     {
-        return view('admin.agenda.create');
+        // Get all pegawai for selection
+        $pegawais = Pegawai::select('id', 'nama', 'nip')
+                        ->orderBy('nama')
+                        ->get();
+
+        return view('admin.agenda.create', compact('pegawais'));
     }
 
     /**
@@ -69,13 +91,22 @@ class AgendaKegiatanController extends Controller
             'sumber' => 'required',
             'tempat' => 'required|string|max:255',
             'waktu' => 'required',
-            'pegawai_yang_ditugaskan' => 'required|string|max:255',
+            'pegawai_ids' => 'required|array|min:1', // Changed from pegawai_yang_ditugaskan
+            'pegawai_ids.*' => 'exists:pegawais,id', // Validate each pegawai ID exists
             'tanggal_kegiatan' => 'required|date',
-            'tindak_lanjut' => 'required|in:DISPOSISI,DIHADIRI KEPALA DINAS',
+            'tindak_lanjut' => 'nullable|in:DISPOSISI,DIHADIRI KEPALA DINAS',
             'keterangan' => 'nullable|string',
         ]);
 
-        AgendaKegiatan::create($validated);
+        // Remove pegawai_ids from validated data before creating
+        $pegawaiIds = $validated['pegawai_ids'];
+        unset($validated['pegawai_ids']);
+
+        // Create the agenda
+        $agenda = AgendaKegiatan::create($validated);
+
+        // Attach pegawai to the agenda
+        $agenda->pegawais()->attach($pegawaiIds);
 
         return redirect()->route('admin.agenda.index')
                         ->with('success', 'Agenda kegiatan berhasil ditambahkan.');
@@ -86,6 +117,7 @@ class AgendaKegiatanController extends Controller
      */
     public function show(AgendaKegiatan $agenda): View
     {
+        $agenda->load('pegawais'); // Eager load pegawais
         return view('admin.agenda.show', compact('agenda'));
     }
 
@@ -94,7 +126,17 @@ class AgendaKegiatanController extends Controller
      */
     public function edit(AgendaKegiatan $agenda): View
     {
-        return view('admin.agenda.edit', compact('agenda'));
+        $agenda->load('pegawais'); // Eager load current pegawais
+
+        // Get all pegawai for selection
+        $pegawais = Pegawai::select('id', 'nama', 'nip')
+                        ->orderBy('nama')
+                        ->get();
+
+        // Get currently assigned pegawai IDs
+        $selectedPegawaiIds = $agenda->pegawais->pluck('id')->toArray();
+
+        return view('admin.agenda.edit', compact('agenda', 'pegawais', 'selectedPegawaiIds'));
     }
 
     /**
@@ -108,16 +150,50 @@ class AgendaKegiatanController extends Controller
             'sumber' => 'required',
             'tempat' => 'required|string|max:255',
             'waktu' => 'required',
-            'pegawai_yang_ditugaskan' => 'required|string|max:255',
+            'pegawai_ids' => 'required|array|min:1', // Changed from pegawai_yang_ditugaskan
+            'pegawai_ids.*' => 'exists:pegawais,id', // Validate each pegawai ID exists
             'tanggal_kegiatan' => 'required|date',
-            'tindak_lanjut' => 'required|in:DISPOSISI,DIHADIRI KEPALA DINAS',
+            'tindak_lanjut' => 'nullable|in:DISPOSISI,DIHADIRI KEPALA DINAS',
             'keterangan' => 'nullable|string',
         ]);
 
+        // Remove pegawai_ids from validated data before updating
+        $pegawaiIds = $validated['pegawai_ids'];
+        unset($validated['pegawai_ids']);
+
+        // Update the agenda
         $agenda->update($validated);
+
+        // Sync pegawai (this will replace all current relations)
+        $agenda->pegawais()->sync($pegawaiIds);
 
         return redirect()->route('admin.agenda.index')
                         ->with('success', 'Agenda kegiatan berhasil diperbarui.');
+    }
+
+    // Optional: Add method to get pegawai for AJAX (if you want dynamic loading)
+    public function getPegawai(Request $request)
+    {
+        $search = $request->get('search');
+
+        $pegawais = Pegawai::select('id', 'nama', 'nip')
+                        ->when($search, function($query) use ($search) {
+                            $query->where('nama', 'like', "%{$search}%")
+                                    ->orWhere('nip', 'like', "%{$search}%");
+                        })
+                        ->orderBy('nama')
+                        ->limit(50) // Limit results for performance
+                        ->get()
+                        ->map(function($pegawai) {
+                            return [
+                                'id' => $pegawai->id,
+                                'text' => $pegawai->nama . ' (' . $pegawai->nip . ')'
+                            ];
+                        });
+
+        return response()->json([
+            'results' => $pegawais
+        ]);
     }
 
     /**

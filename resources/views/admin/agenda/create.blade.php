@@ -169,8 +169,7 @@
                                     </label>
                                     <select class="form-select @error('tindak_lanjut') is-invalid @enderror"
                                             id="tindak_lanjut"
-                                            name="tindak_lanjut"
-                                            required>
+                                            name="tindak_lanjut">
                                         <option value="">Pilih Status</option>
                                         <option value="DIHADIRI KEPALA DINAS" {{ old('tindak_lanjut') == 'DIHADIRI KEPALA DINAS' ? 'selected' : '' }}>
                                             DIHADIRI KEPALA DINAS
@@ -184,20 +183,33 @@
                                     @enderror
                                 </div>
                             </div>
+
                             <!-- Pegawai yang Ditugaskan -->
                             <div class="mb-3">
-                                <label for="pegawai_yang_ditugaskan" class="form-label fw-bold">
+                                <label for="pegawai_ids" class="form-label fw-bold">
                                     <i class="fas fa-user-tie text-primary"></i> Pegawai yang Ditugaskan
                                     <span class="text-danger">*</span>
                                 </label>
-                                <input type="text"
-                                       class="form-control @error('pegawai_yang_ditugaskan') is-invalid @enderror"
-                                       id="pegawai_yang_ditugaskan"
-                                       name="pegawai_yang_ditugaskan"
-                                       value="{{ old('pegawai_yang_ditugaskan') }}"
-                                       placeholder="Masukkan nama pegawai yang bertugas"
-                                       required>
-                                @error('pegawai_yang_ditugaskan')
+                                <select class="form-control @error('pegawai_ids') is-invalid @enderror"
+                                        id="pegawai_ids"
+                                        name="pegawai_ids[]"
+                                        multiple="multiple"
+                                        required>
+                                    @foreach($pegawais as $pegawai)
+                                        <option value="{{ $pegawai->id }}"
+                                                {{ in_array($pegawai->id, old('pegawai_ids', [])) ? 'selected' : '' }}>
+                                            {{ $pegawai->nama }} ({{ $pegawai->nip }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <div class="form-text">
+                                    <i class="fas fa-info-circle text-info"></i>
+                                    Pilih satu atau beberapa pegawai yang akan ditugaskan
+                                </div>
+                                @error('pegawai_ids')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                                @error('pegawai_ids.*')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -245,6 +257,9 @@
         </div>
     </div>
 </div>
+@endsection
+
+@push('styles')
 
 <style>
 .dashboard-header {
@@ -315,9 +330,45 @@
 .text-danger {
     color: #dc3545 !important;
 }
-</style>
 
+/* Custom Select2 styling to match form design */
+.select2-container--bootstrap-5 .select2-selection {
+    border-radius: 8px !important;
+    border: 1px solid #dee2e6 !important;
+    min-height: calc(1.5em + 0.75rem + 2px) !important;
+}
+
+.select2-container--bootstrap-5.select2-container--focus .select2-selection {
+    border-color: #5a6c7d !important;
+    box-shadow: 0 0 0 0.2rem rgba(90, 108, 125, 0.25) !important;
+}
+
+.select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__choice {
+    background-color: #5a6c7d !important;
+    border-color: #5a6c7d !important;
+    border-radius: 4px !important;
+}
+
+.select2-container--bootstrap-5 .select2-dropdown {
+    border-radius: 8px !important;
+}
+</style>
+@endpush
+
+@push('scripts')
+<!-- Select2 JS -->
 <script>
+$(document).ready(function() {
+    // Initialize Select2 for pegawai selection
+    $('#pegawai_ids').select2({
+        theme: 'default',
+        placeholder: 'Pilih pegawai yang akan ditugaskan...',
+        allowClear: true,
+        closeOnSelect: false,
+        width: '100%'
+    });
+});
+
 // Bootstrap form validation
 (function() {
     'use strict';
@@ -343,8 +394,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (resetBtn && form) {
         resetBtn.addEventListener('click', function() {
             form.classList.remove('was-validated');
+            // Reset Select2
+            $('#pegawai_ids').val(null).trigger('change');
         });
     }
 });
 </script>
-@endsection
+@endpush

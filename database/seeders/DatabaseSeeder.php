@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             AgendaKegiatanSeeder::class,
             KoperasiSeeder::class,
+            PegawaiSeeder::class,
         ]);
     }
 }

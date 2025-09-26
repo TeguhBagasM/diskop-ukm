@@ -19,14 +19,9 @@
                             <h5 class="mb-0" style="font-weight: 600; color: #5a6c7d;">
                                 <i class="fas fa-edit me-2"></i>FORM EDIT AGENDA
                             </h5>
-                            <span class="badge bg-{{ $agenda->jenis_kegiatan == 'INTERNAL' ? 'success' : 'warning' }} ms-2" style="border-radius: 15px;">
-                                {{ $agenda->jenis_kegiatan }}
-                            </span>
+                            <span class="badge bg-warning ms-2" style="border-radius: 15px;">Edit</span>
                         </div>
                         <div>
-                            <a href="{{ route('admin.agenda.show', $agenda) }}" class="btn btn-info btn-sm me-1">
-                                <i class="fas fa-eye"></i> Detail
-                            </a>
                             <a href="{{ route('admin.agenda.index') }}" class="btn btn-secondary btn-sm">
                                 <i class="fas fa-arrow-left"></i> Kembali ke Daftar
                             </a>
@@ -48,24 +43,6 @@
                             </div>
                         @endif
 
-                        <!-- Info Card untuk data yang sedang diedit -->
-                        <div class="alert alert-info" role="alert">
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-info-circle fa-2x me-3"></i>
-                                <div>
-                                    <h6 class="alert-heading mb-1">Sedang mengedit agenda:</h6>
-                                    <strong>{{ $agenda->nama_kegiatan }}</strong>
-                                    <br>
-                                    <small class="text-muted">
-                                        <i class="fas fa-calendar me-1"></i>
-                                        {{ $agenda->tanggal_kegiatan ? $agenda->tanggal_kegiatan->format('d/m/Y') : '-' }}
-                                        <i class="fas fa-clock ms-2 me-1"></i>
-                                        {{ $agenda->waktu ? date('H:i', strtotime($agenda->waktu)) : '-' }}
-                                    </small>
-                                </div>
-                            </div>
-                        </div>
-
                         <form action="{{ route('admin.agenda.update', $agenda) }}" method="POST" class="needs-validation" novalidate>
                             @csrf
                             @method('PUT')
@@ -82,10 +59,10 @@
                                             name="jenis_kegiatan"
                                             required>
                                         <option value="">Pilih Jenis Kegiatan</option>
-                                        <option value="INTERNAL" {{ (old('jenis_kegiatan', $agenda->jenis_kegiatan) == 'INTERNAL') ? 'selected' : '' }}>
+                                        <option value="INTERNAL" {{ old('jenis_kegiatan', $agenda->jenis_kegiatan) == 'INTERNAL' ? 'selected' : '' }}>
                                             INTERNAL
                                         </option>
-                                        <option value="EKSTERNAL" {{ (old('jenis_kegiatan', $agenda->jenis_kegiatan) == 'EKSTERNAL') ? 'selected' : '' }}>
+                                        <option value="EKSTERNAL" {{ old('jenis_kegiatan', $agenda->jenis_kegiatan) == 'EKSTERNAL' ? 'selected' : '' }}>
                                             EKSTERNAL
                                         </option>
                                     </select>
@@ -160,7 +137,7 @@
                                            class="form-control @error('waktu') is-invalid @enderror"
                                            id="waktu"
                                            name="waktu"
-                                           value="{{ old('waktu', $agenda->waktu ? date('H:i', strtotime($agenda->waktu)) : '') }}"
+                                           value="{{ old('waktu', $agenda->waktu ? $agenda->waktu->format('H:i') : '') }}"
                                            required>
                                     @error('waktu')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -185,7 +162,6 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-
                                 <!-- Tindak Lanjut -->
                                 <div class="col-md-6 mb-3">
                                     <label for="tindak_lanjut" class="form-label fw-bold">
@@ -194,11 +170,14 @@
                                     </label>
                                     <select class="form-select @error('tindak_lanjut') is-invalid @enderror"
                                             id="tindak_lanjut"
-                                            name="tindak_lanjut"
-                                            required>
+                                            name="tindak_lanjut">
                                         <option value="">Pilih Status</option>
-                                        <option value="DIHADIRI KEPALA DINAS" {{ (old('tindak_lanjut', $agenda->tindak_lanjut) == 'DIHADIRI KEPALA DINAS') ? 'selected' : '' }}>DIHADIRI KEPALA DINAS</option>
-                                        <option value="DISPOSISI" {{ (old('tindak_lanjut', $agenda->tindak_lanjut) == 'DISPOSISI') ? 'selected' : '' }}>DISPOSISI</option>
+                                        <option value="DIHADIRI KEPALA DINAS" {{ old('tindak_lanjut', $agenda->tindak_lanjut) == 'DIHADIRI KEPALA DINAS' ? 'selected' : '' }}>
+                                            DIHADIRI KEPALA DINAS
+                                        </option>
+                                        <option value="DISPOSISI" {{ old('tindak_lanjut', $agenda->tindak_lanjut) == 'DISPOSISI' ? 'selected' : '' }}>
+                                            DISPOSISI
+                                        </option>
                                     </select>
                                     @error('tindak_lanjut')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -208,18 +187,43 @@
 
                             <!-- Pegawai yang Ditugaskan -->
                             <div class="mb-3">
-                                <label for="pegawai_yang_ditugaskan" class="form-label fw-bold">
+                                <label for="pegawai_ids" class="form-label fw-bold">
                                     <i class="fas fa-user-tie text-primary"></i> Pegawai yang Ditugaskan
                                     <span class="text-danger">*</span>
                                 </label>
-                                <input type="text"
-                                       class="form-control @error('pegawai_yang_ditugaskan') is-invalid @enderror"
-                                       id="pegawai_yang_ditugaskan"
-                                       name="pegawai_yang_ditugaskan"
-                                       value="{{ old('pegawai_yang_ditugaskan', $agenda->pegawai_yang_ditugaskan) }}"
-                                       placeholder="Masukkan nama pegawai yang bertugas"
-                                       required>
-                                @error('pegawai_yang_ditugaskan')
+                                <select class="form-control @error('pegawai_ids') is-invalid @enderror"
+                                        id="pegawai_ids"
+                                        name="pegawai_ids[]"
+                                        multiple="multiple"
+                                        required>
+                                    @foreach($pegawais as $pegawai)
+                                        <option value="{{ $pegawai->id }}"
+                                                {{ in_array($pegawai->id, old('pegawai_ids', $selectedPegawaiIds)) ? 'selected' : '' }}>
+                                            {{ $pegawai->nama }} ({{ $pegawai->nip }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <div class="form-text">
+                                    <i class="fas fa-info-circle text-info"></i>
+                                    Pilih satu atau beberapa pegawai yang akan ditugaskan
+                                </div>
+
+                                <!-- Display currently assigned pegawai -->
+                                @if($agenda->pegawais->count() > 0)
+                                    <div class="mt-2">
+                                        <small class="text-muted">
+                                            <strong>Saat ini ditugaskan:</strong>
+                                            @foreach($agenda->pegawais as $pegawai)
+                                                <span class="badge bg-secondary me-1">{{ $pegawai->nama }}</span>
+                                            @endforeach
+                                        </small>
+                                    </div>
+                                @endif
+
+                                @error('pegawai_ids')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                                @error('pegawai_ids.*')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -252,10 +256,10 @@
                                     <a href="{{ route('admin.agenda.index') }}" class="btn btn-light me-2">
                                         <i class="fas fa-times"></i> Batal
                                     </a>
-                                    <button type="button" class="btn btn-warning me-2" onclick="resetToOriginal()">
-                                        <i class="fas fa-undo"></i> Reset ke Asli
-                                    </button>
-                                    <button type="submit" class="btn btn-primary">
+                                    <a href="{{ route('admin.agenda.show', $agenda) }}" class="btn btn-info me-2">
+                                        <i class="fas fa-eye"></i> Lihat Detail
+                                    </a>
+                                    <button type="submit" class="btn btn-warning">
                                         <i class="fas fa-save"></i> Update Agenda
                                     </button>
                                 </div>
@@ -264,35 +268,12 @@
                     </div>
                 </div>
             </div>
-
-            <!-- History/Change Log Card (Optional - if you want to show what changed) -->
-            <div class="card mt-4">
-                <div class="card-header bg-light">
-                    <h6 class="mb-0">
-                        <i class="fas fa-history text-muted"></i> Informasi Agenda
-                    </h6>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <small class="text-muted">
-                                <strong>Dibuat:</strong>
-                                {{ $agenda->created_at ? $agenda->created_at->format('d/m/Y H:i') : '-' }}
-                            </small>
-                        </div>
-                        <div class="col-md-6">
-                            <small class="text-muted">
-                                <strong>Terakhir diupdate:</strong>
-                                {{ $agenda->updated_at ? $agenda->updated_at->format('d/m/Y H:i') : '-' }}
-                            </small>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
+@endsection
 
+@push('styles')
 <style>
 .dashboard-header {
     background-color: #5a6c7d;
@@ -346,6 +327,18 @@
     border-color: #495761;
 }
 
+.btn-warning {
+    background-color: #f39c12;
+    border-color: #f39c12;
+    color: white;
+}
+
+.btn-warning:hover {
+    background-color: #e67e22;
+    border-color: #e67e22;
+    color: white;
+}
+
 .invalid-feedback {
     font-size: 0.875rem;
 }
@@ -363,27 +356,44 @@
     color: #dc3545 !important;
 }
 
-/* Highlight changes */
-.form-control.changed, .form-select.changed {
-    border-left: 4px solid #28a745;
-    background-color: #f8fff8;
+/* Custom Select2 styling to match form design */
+.select2-container--bootstrap-5 .select2-selection {
+    border-radius: 8px !important;
+    border: 1px solid #dee2e6 !important;
+    min-height: calc(1.5em + 0.75rem + 2px) !important;
+}
+
+.select2-container--bootstrap-5.select2-container--focus .select2-selection {
+    border-color: #5a6c7d !important;
+    box-shadow: 0 0 0 0.2rem rgba(90, 108, 125, 0.25) !important;
+}
+
+.select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__choice {
+    background-color: #5a6c7d !important;
+    border-color: #5a6c7d !important;
+    border-radius: 4px !important;
+}
+
+.select2-container--bootstrap-5 .select2-dropdown {
+    border-radius: 8px !important;
 }
 </style>
+@endpush
+
+@push('scripts')
+<!-- Select2 JS -->
 
 <script>
-// Store original values for comparison
-const originalValues = {
-    jenis_kegiatan: '{{ $agenda->jenis_kegiatan }}',
-    nama_kegiatan: '{{ $agenda->nama_kegiatan }}',
-    sumber: '{{ $agenda->sumber }}',
-    tempat: '{{ $agenda->tempat }}',
-    waktu: '{{ $agenda->waktu ? date('H:i', strtotime($agenda->waktu)) : '' }}',
-    tanggal_kegiatan: '{{ $agenda->tanggal_kegiatan ? $agenda->tanggal_kegiatan->format('Y-m-d') : '' }}',
-    pegawai_yang_ditugaskan: '{{ $agenda->pegawai_yang_ditugaskan }}',
-    tindak_lanjut: '{{ $agenda->tindak_lanjut }}',
-    keterangan: `{{ $agenda->keterangan }}`
-};
-
+$(document).ready(function() {
+    $('#pegawai_ids').select2({
+        theme: 'default',
+        placeholder: 'Pilih pegawai yang akan ditugaskan...',
+        allowClear: true,
+        closeOnSelect: false,
+        width: '100%',
+        multiple: true
+    });
+});
 // Bootstrap form validation
 (function() {
     'use strict';
@@ -400,46 +410,5 @@ const originalValues = {
         });
     }, false);
 })();
-
-// Reset to original values
-function resetToOriginal() {
-    if (confirm('Apakah Anda yakin ingin mengembalikan semua field ke nilai asli?')) {
-        document.getElementById('jenis_kegiatan').value = originalValues.jenis_kegiatan;
-        document.getElementById('nama_kegiatan').value = originalValues.nama_kegiatan;
-        document.getElementById('sumber').value = originalValues.sumber;
-        document.getElementById('tempat').value = originalValues.tempat;
-        document.getElementById('waktu').value = originalValues.waktu;
-        document.getElementById('tanggal_kegiatan').value = originalValues.tanggal_kegiatan;
-        document.getElementById('pegawai_yang_ditugaskan').value = originalValues.pegawai_yang_ditugaskan;
-        document.getElementById('tindak_lanjut').value = originalValues.tindak_lanjut;
-        document.getElementById('keterangan').value = originalValues.keterangan;
-
-        // Remove validation classes
-        document.querySelector('.needs-validation').classList.remove('was-validated');
-
-        // Remove change highlights
-        document.querySelectorAll('.changed').forEach(el => el.classList.remove('changed'));
-    }
-}
-
-// Highlight changes as user types
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('.needs-validation');
-    const inputs = form.querySelectorAll('input, select, textarea');
-
-    inputs.forEach(input => {
-        input.addEventListener('input', function() {
-            const fieldName = this.name;
-            const currentValue = this.value;
-            const originalValue = originalValues[fieldName] || '';
-
-            if (currentValue !== originalValue) {
-                this.classList.add('changed');
-            } else {
-                this.classList.remove('changed');
-            }
-        });
-    });
-});
 </script>
-@endsection
+@endpush
