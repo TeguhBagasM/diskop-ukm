@@ -17,9 +17,12 @@ class AdminController extends Controller
     public function index()
     {
         // Ambil agenda kegiatan hari ini
-        $todayAgenda = AgendaKegiatan::whereDate('tanggal_kegiatan', Carbon::today())
-                                   ->orderBy('waktu', 'asc')
-                                   ->get();
+        $todayAgenda = AgendaKegiatan::with('pegawais')
+                                ->whereDate('tanggal_kegiatan', '>=', Carbon::today())
+                                ->orderBy('tanggal_kegiatan', 'desc')
+                                ->orderBy('waktu', 'asc')
+                                ->limit(10)
+                                ->get();
 
         // Statistik untuk cards
         $monthlyAgenda = AgendaKegiatan::whereMonth('tanggal_kegiatan', Carbon::now()->month)

@@ -129,9 +129,9 @@
                                     </div>
                                     <div class="detail-value">
                                         <div class="employee-card">
-                                            <div class="avatar-circle me-3" style="width: 40px; height: 40px; background-color: #5a6c7d; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 16px;">
+                                            {{-- <div class="avatar-circle me-3" style="width: 40px; height: 40px; background-color: #5a6c7d; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 16px;">
                                                 {{ substr($agenda->pegawai_yang_ditugaskan, 0, 2) }}
-                                            </div>
+                                            </div> --}}
                                             <div>
                                                 <strong>{{ $agenda->pegawai_yang_ditugaskan }}</strong>
                                                 <br>
