@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('sumber');
             $table->string('tempat');
             $table->time('waktu');
-            $table->string('pegawai_yang_ditugaskan');
             $table->string('tindak_lanjut')->nullable();
             $table->text('keterangan')->nullable();
             $table->date('tanggal_kegiatan');

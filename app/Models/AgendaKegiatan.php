@@ -17,7 +17,6 @@ class AgendaKegiatan extends Model
         'sumber',
         'tempat',
         'waktu',
-        'pegawai_yang_ditugaskan',
         'tindak_lanjut',
         'keterangan',
         'tanggal_kegiatan',
@@ -27,6 +26,18 @@ class AgendaKegiatan extends Model
         'tanggal_kegiatan' => 'date',
         'waktu' => 'datetime:H:i',
     ];
+
+    // Relasi many-to-many dengan Pegawai
+    public function pegawais()
+    {
+        return $this->belongsToMany(Pegawai::class, 'agenda_kegiatan_pegawai');
+    }
+
+    // Accessor untuk mendapatkan nama-nama pegawai yang ditugaskan
+    public function getPegawaiYangDitugaskanAttribute()
+    {
+        return $this->pegawais->pluck('nama')->implode(', ');
+    }
 
     // Accessor untuk status tindak lanjut
     public function getStatusBadgeAttribute()
@@ -53,5 +64,13 @@ class AgendaKegiatan extends Model
     public function scopeBySumber($query, $sumber)
     {
         return $query->where('sumber', $sumber);
+    }
+
+    // Scope untuk filter berdasarkan pegawai yang ditugaskan
+    public function scopeByPegawai($query, $pegawaiId)
+    {
+        return $query->whereHas('pegawais', function($q) use ($pegawaiId) {
+            $q->where('pegawai_id', $pegawaiId);
+        });
     }
 }
